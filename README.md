@@ -25,3 +25,40 @@ Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To u
 ## Further help
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+
+
+# description
+
+this project is for learning localization and how to add multiple language support in angular
+
+# steps
+
+after setting up new project using ng new project name 
+
+1. ng add @angular/localize
+2. under assets create i18n folder and keep your json files for different language there
+3.  in angular.json under localize add i18n option and under that add sourcelocale(default language) and locales(map json files in i18n folder)
+4. run npm i @ngx-translate/core and npm i @ngx-translate/http-loader
+5. add this code in app module
+  export function httpLoaderFactory(http:HttpClient){
+   return new TranslateHttpLoader(http,'./assets/i18n/','.json')
+}
+
+@NgModule({
+  declarations: [],
+  imports: [
+    CommonModule,
+    BrowserModule, 
+    AppRoutingModule,
+    HttpClientModule,
+    TranslateModule.forRoot({
+      loader:{
+        provide:TranslateLoader,
+        useFactory:httpLoaderFactory,
+        deps:[HttpClient]
+      }
+    })
+  ],
+  bootstrap:[AppComponent]
+})
+export class AppModule { }
